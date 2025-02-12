@@ -49,9 +49,7 @@ def get_sim_path(M, freq, np_seed, num_sim):
     # Annual Trading Day
     T = 250
 
-    # Simulation Time Step
-    dt = 0.004 * freq
-
+    dt = (1/250)* freq
     # Option Day to Maturity; passed from function parameter
     # M = 60
 
@@ -62,10 +60,10 @@ def get_sim_path(M, freq, np_seed, num_sim):
     # num_sim = 1000000
 
     # Annual Return
-    mu = 0.05
+    mu = 0.05 # 0.05
 
     # Annual Volatility
-    vol = 0.2
+    vol = 0.2 # 0.2
 
     # Initial Asset Value
     S = 100

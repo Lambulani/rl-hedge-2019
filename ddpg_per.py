@@ -189,7 +189,7 @@ class DDPG(DRL):
 
         # Q
         output3 = Lambda(lambda o: o[0] - self.ra_c * K.sqrt(K.max(o[1] - o[0] * o[0], 0)))([output1, output2])
-        model_Q = Model(inputs=[s_inputs, a_inputs], outputs=output3)
+        model_Q = Model(inputs=[s_inputs, a_inputs], outputs=output3) #this is like the function F given in the paper
         model_Q.compile(loss="mse", optimizer=Adam(learning_rate))
 
         return model_Q_ex, model_Q_ex2, model_Q
@@ -469,7 +469,7 @@ if __name__ == "__main__":
 
     # episode for training: 0 to 50000 inclusive
     # cycle through available data paths if number of episode for training > number of sim paths
-    history = ddpg.train(50001)
+    history = ddpg.train(1000000)
     ddpg.save_history(history, "ddpg.csv")
 
     # setup for testing; use another instance for testing
@@ -478,4 +478,4 @@ if __name__ == "__main__":
     ddpg_test.load()
 
     # episode for testing: 0 to 100000 inclusive
-    ddpg_test.test(100001)
+    ddpg_test.test(1)

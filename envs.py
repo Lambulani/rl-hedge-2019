@@ -15,7 +15,7 @@ class TradingEnv(gym.Env):
 
     # trade_freq in unit of day, e.g 2: every 2 day; 0.5 twice a day;
     def __init__(self, cash_flow_flag=0, dg_random_seed=1, num_sim=500002, sabr_flag = False,
-        continuous_action_flag=False, spread=0, init_ttm=5, trade_freq=1, num_contract=1):
+        continuous_action_flag=False, spread=0, init_ttm=10, trade_freq=0.2, num_contract=1):
 
         # simulated data: array of asset price, option price and delta paths (num_path x num_period)
         # generate data now
