@@ -122,9 +122,9 @@ class DRL:
         
         # Kernel density plot showing the total cost of delta hedging
         plt.figure(figsize=(10, 5))
-        sns.kdeplot(bs_total_cost, shade=True, label='BS delta Total Cost', color = "orange")
-        # sns.kdeplot(reinf_total_cost, shade=True, label='Reinforcement Learning Total Cost',
-        #             color = "blue")
+        sns.kdeplot(bs_total_cost, shade=True, label='BS delta Total Cost', color = "orange", bw_adjust=1.5)
+        sns.kdeplot(reinf_total_cost, shade=True, label='Reinforcement Learning Total Cost',
+                    color = "blue", bw_adjust=1.5)
         plt.xlabel("Total Cost")
         plt.ylabel("Density")
         plt.title('Kernel Density Plot of Total Cost')
@@ -135,9 +135,9 @@ class DRL:
 
         # Kernel density plot showing the total cost of delta hedging
         plt.figure(figsize=(10, 5))
-        sns.kdeplot(bs_total_pnl_vol, shade=True, label='BS delta Total PnL Volatility', color = "orange")
-        # sns.kdeplot(reinf_total_pnl_vol, shade=True, label='Reinforcement Learning Total PnL Volatility ',
-        #             color = "blue")
+        sns.kdeplot(bs_total_pnl_vol, shade=True, label='BS delta Total PnL Volatility', color = "orange", bw_adjust=1.5)
+        sns.kdeplot(reinf_total_pnl_vol, shade=True, label='Reinforcement Learning Total PnL Volatility ',
+                    color = "blue", bw_adjust=1.5)
         plt.xlabel("Total PnL Volatility")
         plt.ylabel("Density")
         plt.title('Kernel Density Plot of Total PnL Volatility')
@@ -148,9 +148,9 @@ class DRL:
 
         # Kernel density plot showing =the student T statistic of the total PnL
         plt.figure(figsize=(10, 5))
-        sns.kdeplot(bs_total_pnl_studentT, shade=True, label='BS delta Total PnL Volatility', color = "orange")
-        # sns.kdeplot(reinf_total_pnl_vol, shade=True, label='Reinforcement Learning Total PnL Volatility ',
-        #             color = "blue")
+        sns.kdeplot(bs_total_pnl_studentT, shade=True, label='BS delta Total PnL Volatility', color = "orange",bw_adjust=1.5, )
+        sns.kdeplot(reinf_total_pnl_vol, shade=True, label='Reinforcement Learning Total PnL Volatility ',
+                    color = "blue", bw_adjust=1.5)
         plt.xlabel("Studennt t statistic Total PnL")
         plt.ylabel("Density")
         plt.title('Kernel Density Plot of Student T statistic Total PnL')
