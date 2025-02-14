@@ -130,7 +130,7 @@ class DRL:
         plt.title('Kernel Density Plot of Total Cost')
         plt.legend()
         plt.grid(True)
-        plt.savefig("Total_Cost_kde_plot.png")
+        plt.savefig("Kernel_Density_Plot_Total_Cost.png")
         plt.show()
 
         # Kernel density plot showing the total cost of delta hedging
