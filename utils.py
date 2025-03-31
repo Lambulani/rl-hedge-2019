@@ -26,10 +26,12 @@ def bs_call(iv, T, S, K, r, q):
     d2 = d1 - iv * np.sqrt(T)
     bs_price = S * np.exp(-q * T) * norm.cdf(d1) - K * np.exp(-r * T) * norm.cdf(d2)
     bs_delta = np.exp(-q * T) * norm.cdf(d1)
-    return bs_price, bs_delta
+    bs_gamma = np.exp(-q * T) * norm.pdf(d1) / (S * iv * np.sqrt(T)) 
+    bs_theta= -S * np.exp(-q * T) * norm.pdf(d1) * iv / (2 * np.sqrt(T)) - r * K * np.exp(-r * T) * norm.cdf(d2) + q * S * np.exp(-q * T) * norm.cdf(d1)
+    return bs_price, bs_delta, bs_gamma, bs_theta
 
 
-def get_sim_path(M, freq, np_seed, num_sim):
+def get_sim_path(M, freq, np_seed, num_sim, mu =0, vol= 0.01, S = 100, K = 100, r = 0, q = 0):
     """ Return simulated data: a tuple of three arrays
         M: initial time to maturity
         freq: trading freq in unit of day, e.g. freq=2: every 2 day; freq=0.5 twice a day;
@@ -63,8 +65,7 @@ def get_sim_path(M, freq, np_seed, num_sim):
     mu = 0 # 0.05
 
     # Annual Volatility
-    vol = 0.01 # 0.2
-
+    vol = vol
     # Initial Asset Value
     S = 100
 
@@ -86,11 +87,11 @@ def get_sim_path(M, freq, np_seed, num_sim):
 
     # BS price 2-d array and bs delta 2-d array
     print("2. generate BS price and delta")
-    bs_price, bs_delta = bs_call(vol, ttm / T, a_price, K, r, q)
+    bs_price, bs_delta, bs_gamma, bs_theta = bs_call(vol, ttm / T, a_price, K, r, q)
 
     print("simulation done!")
 
-    return a_price, bs_price, bs_delta
+    return a_price, bs_price, bs_delta, bs_gamma, bs_theta
 
 
 def sabr_sim(num_path, num_period, mu, std, init_p, dt, rho, beta, volvol):
@@ -149,12 +150,12 @@ def bartlett(sigma, T, S, K, r, q, ds, beta, volvol, rho):
 
     return b_delta
 
-def bs_call(iv, T, S, K, r, q):
-    d1 = (np.log(S / K) + (r - q + iv * iv / 2) * T) / (iv * np.sqrt(T))
-    d2 = d1 - iv * np.sqrt(T)
-    bs_price = S * np.exp(-q * T) * norm.cdf(d1) - K * np.exp(-r * T) * norm.cdf(d2)
-    bs_delta = np.exp(-q * T) * norm.cdf(d1)
-    return bs_price, bs_delta
+# def bs_call(iv, T, S, K, r, q):
+#     d1 = (np.log(S / K) + (r - q + iv * iv / 2) * T) / (iv * np.sqrt(T))
+#     d2 = d1 - iv * np.sqrt(T)
+#     bs_price = S * np.exp(-q * T) * norm.cdf(d1) - K * np.exp(-r * T) * norm.cdf(d2)
+#     bs_delta = np.exp(-q * T) * norm.cdf(d1)
+#     return bs_price, bs_delta
 
 
 def get_sim_path_sabr(M, freq, np_seed, num_sim):

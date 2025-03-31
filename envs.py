@@ -15,16 +15,23 @@ class TradingEnv(gym.Env):
 
     # trade_freq in unit of day, e.g 2: every 2 day; 0.5 twice a day;
     def __init__(self, cash_flow_flag=0, dg_random_seed=1, num_sim=500002, sabr_flag = False,
-        continuous_action_flag=False, spread=0, init_ttm=10, trade_freq=0.2, num_contract=1):
+        continuous_action_flag=False, spread=0, init_ttm=10, trade_freq=0.2, num_contract=1, mu =0, vol = 0.01*np.sqrt(250), S = 100, K = 100, r = 0, q = 0):
 
         # simulated data: array of asset price, option price and delta paths (num_path x num_period)
         # generate data now
+        self.mu = mu
+        self.vol = vol
+        self.S = S
+        self.K = K
+        self.r = r
+        self.q = q
+
         if sabr_flag:
             self.path, self.option_price_path, self.delta_path, self.bartlett_delta_path = get_sim_path_sabr(M=init_ttm, freq=trade_freq,
                 np_seed=dg_random_seed, num_sim=num_sim)
         else:
-            self.path, self.option_price_path, self.delta_path = get_sim_path(M=init_ttm, freq=trade_freq,
-                np_seed=dg_random_seed, num_sim=num_sim)
+            self.path, self.option_price_path, self.delta_path, self.gamma_path, self.theta_path = get_sim_path(M=init_ttm, freq=trade_freq,
+                np_seed=dg_random_seed, num_sim=num_sim, mu =self.mu , vol = self.vol , S = self.S, K = self.K, r = self.r, q = self.q)
 
         # other attributes
         self.num_path = self.path.shape[0]
